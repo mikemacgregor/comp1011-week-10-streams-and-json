@@ -1,4 +1,5 @@
 import Models.Customer;
+import Utilities.CovidJSONReader;
 import Utilities.DataUtility;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -62,6 +63,10 @@ public class Main { // extends Application {
                                                                 Collectors.counting()));
 
         System.out.println(bloodTypeCount);
+
+
+        // json
+        CovidJSONReader.getCovidJSON();
 
         // if using a gui scene
         try {
