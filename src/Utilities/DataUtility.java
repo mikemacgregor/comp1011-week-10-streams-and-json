@@ -3,6 +3,7 @@ package Utilities;
 import Models.Customer;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,14 @@ public class DataUtility {
 
             // loop over results set
             while (resultSet.next()) {
+
+                // get birthday from string in the database
+                String[] birthdayArray = resultSet.getString("birthday").split("/");
+                int year = Integer.parseInt(birthdayArray[2]);
+                int month = Integer.parseInt(birthdayArray[0]);
+                int day = Integer.parseInt(birthdayArray[1]);
+                LocalDate birthday = LocalDate.of(year, month, day);
+
                 Customer newCustomer = new Customer(
                         resultSet.getInt("number"),
                         resultSet.getString("firstName"),
@@ -41,7 +50,8 @@ public class DataUtility {
                         resultSet.getString("bloodtype"),
                         resultSet.getString("telephonenumber"),
                         Double.parseDouble(resultSet.getString("kilograms")),
-                        Double.parseDouble(resultSet.getString("centimeters"))
+                        Double.parseDouble(resultSet.getString("centimeters")),
+                        birthday
                 );
 
                 customers.add(newCustomer);

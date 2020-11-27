@@ -15,6 +15,7 @@ public class Customer {
     private PhoneNumber phoneNumber;
     private Double weight;
     private Double height;
+    private LocalDate birthday;
 
     /*
      * Constructor to retrieve a customer from the database (includes the id)
@@ -28,7 +29,7 @@ public class Customer {
      * @param height
      */
     public Customer(int id, String firstName, String lastName, String creditCardType, String bloodType,
-                    String phoneNumber, Double weight, Double height) {
+                    String phoneNumber, Double weight, Double height, LocalDate birthday) {
         setId(id);
         setFirstName(firstName);
         setLastName(lastName);
@@ -37,6 +38,7 @@ public class Customer {
         setPhoneNumber(phoneNumber);
         setWeight(weight);
         setHeight(height);
+        setBirthday(birthday);
     }
 
     /*
@@ -156,6 +158,18 @@ public class Customer {
             throw new IllegalArgumentException("The customer's height is outside the valid range of 30 to 300 cm");
     }
 
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public int getAge() {
+        return Period.between(birthday, LocalDate.now()).getYears();
+    }
+
     // weight/height/height*10000 ... weight in kg, height in cm
     public Double getBMI() {
         return (weight/height/height * 10000);
@@ -194,6 +208,6 @@ public class Customer {
     @Override
     public String toString()
     {
-        return String.format("%d %s %s %.1f %.1f %.1f", id, firstName, lastName, height, weight, getBMI());
+        return String.format("%d %s %s %d %.1f %.1f %.1f", id, firstName, lastName, getAge(), height, weight, getBMI());
     }
 }
